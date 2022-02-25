@@ -4,17 +4,19 @@ const global = {
 	'+': (...args) => args.reduce((acc, cur) => acc + cur)
 }
 
-/* const isAtom = word => {
-  const wordValue = isNumber(word) ? {type: 'number', value: Number(word)} : 
-                     isString(word) ? {type: 'string', value: word}: undefined
-  return wordValue 
-}
- */
+
+
+// export const isAtom = word => {
+// 	const wordValue =  isFunction(word) ? {type: 'function', value: global[word]} :
+//   									 isNumber(word) ? {type: 'number', value: Number(word)} : 
+//   									 isString(word) ? {type: 'string', value: word} : undefined
+//   return wordValue 
+// }
 
 export const isAtom = word => {
-	const wordValue =  isFunction(word) ? {type: 'function', value: global[word]} :
-  									 isNumber(word) ? {type: 'number', value: Number(word)} : 
-  									 isString(word) ? {type: 'string', value: word} : undefined
+	const wordValue =  isFunction(word) ? global[word] :
+  									 isNumber(word) ? Number(word) : 
+  									 isString(word) ? word : undefined
   return wordValue 
 }
 
