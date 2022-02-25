@@ -1,11 +1,14 @@
-function stringToNestedStructure(str) {
+import { isAtom } from '../evaluate/evaluate.js'
+
+
+function stringToTree(str) {
   var i = 0
   function parseList() {
     var arr = []
     var startIndex = i
     function addWord() {
       if (i-1 > startIndex) {
-        arr.push(str.slice(startIndex, i-1))
+        arr.push(isAtom(str.slice(startIndex, i-1)))
       }
     }
     while (i < str.length) {
@@ -28,8 +31,9 @@ function stringToNestedStructure(str) {
   }
   return parseList()
 }
-console.log(stringToNestedStructure("((developer or engineer ) or (nurse or doctor)) and manager"))
+//console.log(stringToTree("((developer or engineer ) or (nurse or doctor)) and manager"))
 
+export default stringToTree
 
 
 
