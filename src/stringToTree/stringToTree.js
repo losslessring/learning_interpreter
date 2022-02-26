@@ -1,4 +1,4 @@
-import { isAtom } from '../evaluate/evaluate.js'
+import { isAtom } from '../parse/parse.js'
 
 
 function stringToTree(str) {

@@ -1,44 +1,43 @@
-// const programText = '1 1 1 + 2 4 5 6 a 3 2'
 
-const global = {
-	'+': (...args) => args.reduce((acc, cur) => acc + cur)
+
+export function evaluate(expressionObj) {
+    if (Array.isArray(expressionObj)) {
+        if (expressionObj[0].type === 'function') {
+            const func = expressionObj[0].value
+            expressionObj.shift()
+            let args = expressionObj.map(expression => {
+                return evaluate(expression)
+            })
+            //console.log('func', func(...args))
+            return func(...args)
+        } else {
+            return expressionObj.map(expression => {
+                return evaluate(expression)
+            })
+        }
+
+    } else if (expressionObj.type === 'number'){
+      return expressionObj.value
+    } else if (expressionObj.type === 'string'){
+        return expressionObj.value
+    } 
 }
 
 
-
-// export const isAtom = word => {
-// 	const wordValue =  isFunction(word) ? {type: 'function', value: global[word]} :
-//   									 isNumber(word) ? {type: 'number', value: Number(word)} : 
-//   									 isString(word) ? {type: 'string', value: word} : undefined
-//   return wordValue 
-// }
-
-export const isAtom = word => {
-	const wordValue =  isFunction(word) ? global[word] :
-  									 isNumber(word) ? Number(word) : 
-  									 isString(word) ? word : undefined
-  return wordValue 
-}
-
-export const isFunction = word => global[word] !== undefined
- 
-const isNumber = word => {
-  return !isNaN(Number(word)) 
-}
-
-const isString = word => isNaN(Number(word))
-
-
-const parse = str => str.split(' ')
-
-export const evaluate = words => words.map(isAtom)
-
-
-// const words = parse(programText)
-// console.log(words)
-
-// const atoms = evaluate(words)
-// console.log(atoms)
-
-
-
+// def eval(x: Exp, env=global_env) -> Exp:
+//     "Evaluate an expression in an environment."
+//     if isinstance(x, Symbol):        # variable reference
+//         return env[x]
+//     elif isinstance(x, Number):      # constant number
+//         return x                
+//     elif x[0] == 'if':               # conditional
+//         (_, test, conseq, alt) = x
+//         exp = (conseq if eval(test, env) else alt)
+//         return eval(exp, env)
+//     elif x[0] == 'define':           # definition
+//         (_, symbol, exp) = x
+//         env[symbol] = eval(exp, env)
+//     else:                            # procedure call
+//         proc = eval(x[0], env)
+//         args = [eval(arg, env) for arg in x[1:]]
+//         return proc(*args)
