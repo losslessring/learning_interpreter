@@ -31,7 +31,6 @@ function stringToTree(str) {
   }
   return parseList()
 }
-//console.log(stringToTree("((developer or engineer ) or (nurse or doctor)) and manager"))
 
 export default stringToTree
 
